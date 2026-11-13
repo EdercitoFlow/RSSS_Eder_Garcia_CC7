@@ -16,16 +16,17 @@ import java.util.List;
 @Service
 public class OrdenServicioService {
     private final OrdenServicioRepository ordenRepository;
+
     private final VehiculoRepository vehiculoRepository;
 
     private final List<EstadoOrden> pendientes = List.of(EstadoOrden.RECIBIDA, EstadoOrden.EN_REPARACION);
 
     public OrdenServicioService(OrdenServicioRepository ordenRepository, VehiculoRepository vehiculoRepository) {
+
         this.ordenRepository = ordenRepository;
         this.vehiculoRepository = vehiculoRepository;
     }
 
-    // Servicio: crearOrden
     public OrdenServicio crearOrden(CrearOrdenRequest request) {
         Vehiculo vehiculo = buscarVehiculo(request.vehiculoId());
 
@@ -34,20 +35,22 @@ public class OrdenServicioService {
         }
 
         if (ordenRepository.existsByVehiculoIdAndEstadoIn(vehiculo.getId(), pendientes)) {
+
             throw new CustomException(HttpStatus.CONFLICT, "El vehiculo ya tiene una orden RECIBIDA o EN_REPARACION");
         }
 
         OrdenServicio orden = new OrdenServicio();
         orden.setDescripcion(request.descripcion());
         orden.setTipo(request.tipo());
+
         orden.setEstado(EstadoOrden.RECIBIDA);
+
         orden.setCosto(0);
         orden.setVehiculo(vehiculo);
 
         return ordenRepository.save(orden);
     }
 
-    // Servicio: iniciarReparacion (pasa la orden de RECIBIDA a EN_REPARACION)
     public OrdenServicio iniciarReparacion(Long ordenId) {
         OrdenServicio orden = buscarOrden(ordenId);
 
@@ -59,7 +62,6 @@ public class OrdenServicioService {
         return ordenRepository.save(orden);
     }
 
-    // Servicio: finalizarOrden
     public OrdenServicio finalizarOrden(Long ordenId) {
         OrdenServicio orden = buscarOrden(ordenId);
 
@@ -75,7 +77,6 @@ public class OrdenServicioService {
         return ordenRepository.save(orden);
     }
 
-    // Servicio: actualizarCosto
     public OrdenServicio actualizarCosto(Long ordenId, ActualizarCostoRequest request) {
         OrdenServicio orden = buscarOrden(ordenId);
 
@@ -87,30 +88,30 @@ public class OrdenServicioService {
         return ordenRepository.save(orden);
     }
 
-    // Servicio: cancelarOrdenesPendientes
     public List<OrdenServicio> cancelarOrdenesPendientes(Long vehiculoId) {
-        buscarVehiculo(vehiculoId); // valida que el vehiculo exista
+
+        buscarVehiculo(vehiculoId);
 
         List<OrdenServicio> ordenes = ordenRepository.findByVehiculoIdAndEstadoIn(vehiculoId, pendientes);
         for (OrdenServicio orden : ordenes) {
+
             orden.setEstado(EstadoOrden.CANCELADA);
         }
 
         return ordenRepository.saveAll(ordenes);
     }
 
-    // Servicio: listarOrdenes
     public List<OrdenServicio> listarOrdenes() {
         return ordenRepository.findAll();
-    }
 
-    // Servicio: listarOrdenesPorEstado
-    public List<OrdenServicio> listarOrdenesPorEstado(EstadoOrden estado) {
-        return ordenRepository.findByEstado(estado);
+
+
     }
 
     private Vehiculo buscarVehiculo(Long id) {
         return vehiculoRepository.findById(id)
+
+
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "El vehiculo con id " + id + " no existe"));
     }
 

@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/vehiculos")
 @CrossOrigin("*")
@@ -31,10 +29,5 @@ public class VehiculoController {
     @PatchMapping("/{id}/desactivar")
     public ResponseEntity<Vehiculo> desactivarVehiculo(@PathVariable Long id) {
         return ResponseEntity.ok(servicio.desactivarVehiculo(id));
-    }
-
-    @GetMapping("/activos")
-    public ResponseEntity<List<Vehiculo>> listarVehiculosActivos() {
-        return ResponseEntity.ok(servicio.listarVehiculosActivos());
     }
 }

@@ -13,6 +13,4 @@ public interface OrdenServicioRepository extends JpaRepository<OrdenServicio, Lo
     boolean existsByVehiculoIdAndEstadoIn(Long vehiculoId, List<EstadoOrden> estados);
 
     List<OrdenServicio> findByVehiculoIdAndEstadoIn(Long vehiculoId, List<EstadoOrden> estados);
-
-    List<OrdenServicio> findByEstado(EstadoOrden estado);
 }

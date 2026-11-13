@@ -21,7 +21,6 @@ public class VehiculoService {
         this.ordenRepository = ordenRepository;
     }
 
-    // Servicio: registrarVehiculo
     public Vehiculo registrarVehiculo(RegistrarVehiculoRequest request) {
         if (vehiculoRepository.existsByPlaca(request.placa())) {
             throw new CustomException(HttpStatus.CONFLICT, "Ya existe un vehiculo con la placa " + request.placa());
@@ -37,7 +36,6 @@ public class VehiculoService {
         return vehiculoRepository.save(vehiculo);
     }
 
-    // Servicio: desactivarVehiculo
     public Vehiculo desactivarVehiculo(Long vehiculoId) {
         Vehiculo vehiculo = buscarVehiculo(vehiculoId);
 
@@ -48,11 +46,6 @@ public class VehiculoService {
 
         vehiculo.setActivo(false);
         return vehiculoRepository.save(vehiculo);
-    }
-
-    // Servicio: listarVehiculosActivos
-    public List<Vehiculo> listarVehiculosActivos() {
-        return vehiculoRepository.findByActivoTrue();
     }
 
     private Vehiculo buscarVehiculo(Long id) {

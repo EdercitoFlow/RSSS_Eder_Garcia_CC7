@@ -3,7 +3,6 @@ package mx.edu.utez.controller;
 import jakarta.validation.Valid;
 import mx.edu.utez.dto.ActualizarCostoRequest;
 import mx.edu.utez.dto.CrearOrdenRequest;
-import mx.edu.utez.model.EstadoOrden;
 import mx.edu.utez.model.OrdenServicio;
 import mx.edu.utez.service.OrdenServicioService;
 import org.springframework.http.HttpStatus;
@@ -53,10 +52,5 @@ public class OrdenServicioController {
     @GetMapping
     public ResponseEntity<List<OrdenServicio>> listarOrdenes() {
         return ResponseEntity.ok(servicio.listarOrdenes());
-    }
-
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<OrdenServicio>> listarOrdenesPorEstado(@PathVariable EstadoOrden estado) {
-        return ResponseEntity.ok(servicio.listarOrdenesPorEstado(estado));
     }
 }

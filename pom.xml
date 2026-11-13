@@ -11,13 +11,14 @@
     </parent>
 
     <groupId>mx.edu</groupId>
-    <artifactId>RSSS_Eder_Garcia_CC7</artifactId>
+    <artifactId>RSSS_Eder_Gabriel_CC7</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>RSSS_Eder_Garcia_CC7</name>
+    <name>RSSS_Eder_Gabriel_CC7</name>
     <description>Taller mecanico - ordenes de servicio</description>
 
     <properties>
         <java.version>17</java.version>
+        <lombok.version>1.18.42</lombok.version>
     </properties>
 
     <dependencies>
